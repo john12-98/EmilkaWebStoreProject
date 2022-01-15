@@ -1,7 +1,7 @@
 export const sliderItems = [
   {
     id: 1,
-    img: "https://i.ibb.co/DG69bQ4/1.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
     title: "SUMMER SALE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "f5fafd",
@@ -15,7 +15,7 @@ export const sliderItems = [
   },
   {
     id: 3,
-    img: "https://i.ibb.co/XsdmR2c/3.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
     title: "LOUNGEWEAR LOVE",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
     bg: "fbf0f4",
@@ -25,7 +25,7 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
     title: "SHIRT STYLE!",
     cat: "women",
   },
@@ -58,19 +58,19 @@ export const popularProducts = [
   },
   {
     id: 4,
-    img: "https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/107/BUS-PAT-BURTE-1320516/1170x1470_BS_2016_05_132_front.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
   },
   {
     id: 5,
-    img: "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
   },
   {
     id: 6,
-    img: "https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
   },
   {
     id: 7,
-    img: "https://www.vintageindustries.nl/download_front/qympzk1762/2217_Arrow_Jacket_Forest.png",
+    img: "https://i.pinimg.com/originals/c8/d4/5b/c8d45bd177df1c53bfacb601e77c1970.jpg",
   },
   {
     id: 8,
