@@ -99,14 +99,15 @@ function Login() {
           <Button disabled={loading} type="submit">
             Login
           </Button>
-        </Form>
-        <div>
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </div>
 
-        <div>
-          Need an account?<Link to="/signup">Sign up</Link>
-        </div>
+          <div>
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
+
+          <div>
+            Need an account?<Link to="/signup">Sign up</Link>
+          </div>
+        </Form>
       </Wrapper>
     </Container>
   );
