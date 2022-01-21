@@ -1,5 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
 import React from "react";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
@@ -100,12 +101,17 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const { search } = useLocation();
+  const productParam = new URLSearchParams(search);
+  const imageurl = productParam.get("imageurl");
+  const price = productParam.get("price");
+  console.log("srtsrtsrtsrtsrt  ", search);
   return (
     <Container>
       <NavBar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png"></Image>
+          <Image src={imageurl}></Image>
         </ImgContainer>
         <InfoContainer>
           <Title>Jenes</Title>
@@ -115,7 +121,7 @@ const Product = () => {
             aspernatur ipsam obcaecati mollitia corporis molestiae dolore
             dolores saepe. Architecto aliquid odit autem!
           </Desc>
-          <Price>$ 20</Price>
+          <Price>{price} ETB</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

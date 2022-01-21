@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Search from "@material-ui/icons/Search";
-
+//import Product from "../Pages/Product";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
+import { Link, useHistory } from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -65,22 +66,29 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const h = useHistory();
   return (
-    <Container>
-      {/* <Circle /> */}
-      <Image src={item.img} />
-      <Info>
-        <Icon>
-          <ShoppingCartOutlinedIcon />
-        </Icon>
-        <Icon>
-          <Search />
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
-        </Icon>
-      </Info>
-    </Container>
+    <div>
+      <Container>
+        {/* <Circle /> */}
+        <Image src={item.imgUrl} />
+        <Info>
+          <Icon>
+            <ShoppingCartOutlinedIcon />
+          </Icon>
+          <Icon>
+            <Search />
+          </Icon>
+          <Icon>
+            <FavoriteBorderOutlined />
+          </Icon>
+        </Info>
+        <label>price: {item.price}</label>
+      </Container>
+      <Link to={`/product?imageurl=${item.imgUrl}&price=${item.price}`}>
+        view garment
+      </Link>
+    </div>
   );
 };
 

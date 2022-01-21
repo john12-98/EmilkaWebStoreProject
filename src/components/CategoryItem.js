@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useHistory } from "react-router-dom";
 const Container = styled.div`
   flex: 1;
   margin: 3;
@@ -38,12 +39,21 @@ const Button = styled.button`
 `;
 
 const CategoryItem = ({ item }) => {
+  const h = useHistory();
   return (
     <Container>
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
+        <Button
+          onClick={() => {
+            if (item.title === "Men") h.push("/productlist/Men");
+            else if (item.title === "Women") h.push("/productlist/Women");
+            // else h.push("/productlist/Kids");
+          }}
+        >
+          SHOP NOW
+        </Button>
       </Info>
     </Container>
   );

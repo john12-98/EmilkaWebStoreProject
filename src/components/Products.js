@@ -9,12 +9,18 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
-const Products = () => {
+const Products = ({ p, gender }) => {
+  let g = gender.toString().toLowerCase();
   return (
     <Container>
-      {popularProducts.map((item) => (
-        <Product item={item} key={item.id} />
-      ))}
+      {console.log("p is: ", p)}
+      {p?.map((item) => {
+        // console.log(item.gender);
+        console.log("uuuuuuuuuuuu", g);
+        if (item.gender === g) {
+          return <Product item={item} key={item._id} />;
+        }
+      })}
     </Container>
   );
 };

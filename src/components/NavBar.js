@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Search from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-
+import { useAuth } from "../contexts/AuthContext";
 import { mobile } from "../responsive.js";
 import { Badge } from "@material-ui/core";
 
@@ -68,6 +69,30 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 const NavBar = () => {
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      history.push("/login");
+    } catch {
+      setError("failed to logout");
+    }
+  }
+
+  function checkCurrentUser() {
+    if (currentUser === null) {
+      console.log("current user is:    ", currentUser);
+      return false;
+    } else {
+      console.log("current user is:    ", currentUser);
+      return true;
+    }
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -78,12 +103,39 @@ const NavBar = () => {
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
+        {/* {error && <p>{error}</p>} */}
         <Center>
           <Logo>Emilka.</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          {checkCurrentUser() ? (
+            <span>{1}</span>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                history.push("/signup");
+              }}
+            >
+              REGISTER
+            </MenuItem>
+          )}
+
+          {checkCurrentUser() ? (
+            <span>{1}</span>
+          ) : (
+            <MenuItem
+              onClick={() => {
+                history.push("/login");
+              }}
+            >
+              SIGN IN
+            </MenuItem>
+          )}
+          {checkCurrentUser() ? (
+            <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+          ) : (
+            <span>{1}</span>
+          )}
           <MenuItem>
             <Badge badgeContent={4} color="primary">
               <ShoppingCartOutlinedIcon />

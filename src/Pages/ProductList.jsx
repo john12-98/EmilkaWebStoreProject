@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import Products from "../components/Products";
 import { mobile } from "../responsive";
+import Axios from "axios";
 const Container = styled.div``;
 const Title = styled.h1`
   margin: 20px;
@@ -29,11 +30,18 @@ const Select = styled.select`
   ${mobile({ margin: "10px 0px" })}
 `;
 const Option = styled.option``;
-const ProductList = () => {
+const ProductList = (props) => {
+  const [prouctsList, setProductsList] = useState();
+  useEffect(() => {
+    Axios.get("http://localhost:3001/getallproducts").then((response) => {
+      setProductsList(response.data);
+      //console.log(response.data);
+    });
+  }, []);
   return (
     <Container>
       <NavBar />
-      <Title>Dresses</Title>
+      <Title>{props.match.params.category}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
@@ -67,7 +75,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products />
+      <Products p={prouctsList} gender={props.match.params.category} />
       <Footer />
     </Container>
   );

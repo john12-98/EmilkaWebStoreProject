@@ -71,7 +71,7 @@ function Login() {
       setError("");
       setLoading(true); //prevents the user from multiple clicks of the sign up button and create multiple accounts
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/"); //goes to dashboard
+      history.push("/"); //goes to dashboard/Home
     } catch {
       setError("failed to sign in");
     }

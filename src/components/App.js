@@ -1,6 +1,7 @@
 import React from "react";
 import Signup from "./Signup";
 import Dashboard from "./Dashboard";
+import Home from "../Pages/Home";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
 import { Container } from "react-bootstrap";
@@ -8,20 +9,21 @@ import ForgotPassword from "./ForgotPassword";
 import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
+import ProductList from "../Pages/ProductList";
+import Products from "./Products";
+import Product from "../Pages/Product";
 function App() {
   return (
     <AuthProvider>
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
+      <Container>
+        <div>
           <Router>
             <AuthProvider>
               <Switch>
-                <PrivateRoute path="/" exact component={Dashboard} />
+                <Route path="/" exact component={Home} />
+                {/* <PrivateRoute path="/" exact component={Home} /> */}
                 {
-                  //<Home />
+                  //<Home /> Dashboard
                 }
                 <PrivateRoute
                   path="/update-profile"
@@ -30,6 +32,11 @@ function App() {
                 />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/login" exact component={Login} />
+                <Route path="/dash" exact component={Dashboard} />
+                <Route path="/products" component={Products} />
+                <Route path="/productlist/:category" component={ProductList} />
+                <Route path="/product" component={Product} />
+
                 <Route
                   path="/forgot-password"
                   exact
