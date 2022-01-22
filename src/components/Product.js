@@ -4,7 +4,8 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Search from "@material-ui/icons/Search";
 //import Product from "../Pages/Product";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Info = styled.div`
   opacity: 0;
@@ -67,6 +68,7 @@ const Icon = styled.div`
 
 const Product = ({ item }) => {
   const h = useHistory();
+  const { garmentDetails, setGarmentDetails } = useAuth();
   return (
     <div>
       <Container>
@@ -85,9 +87,17 @@ const Product = ({ item }) => {
         </Info>
         <label>price: {item.price}</label>
       </Container>
-      <Link to={`/product?imageurl=${item.imgUrl}&price=${item.price}`}>
+      <button
+        onClick={() => {
+          setGarmentDetails(item);
+          h.push(`/product?itemId=${item._id}`);
+        }}
+      >
         view garment
-      </Link>
+      </button>
+      {/* <Link to={`/product?imageurl=${item.imgUrl}&price=${item.price}`}>
+        view garment
+      </Link> */}
     </div>
   );
 };

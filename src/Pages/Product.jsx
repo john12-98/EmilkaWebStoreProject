@@ -1,11 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
-import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import Products from "../components/Products";
 import { mobile } from "../responsive";
+import Axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
@@ -101,27 +103,35 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const [flag, setFlag] = useState(false);
   const { search } = useLocation();
   const productParam = new URLSearchParams(search);
-  const imageurl = productParam.get("imageurl");
-  const price = productParam.get("price");
-  console.log("srtsrtsrtsrtsrt  ", search);
+  // const imageurl = productParam.get("imageurl");
+  const item = productParam.get("itemId");
+  const { garmentDetails, setGarmentDetails } = useAuth();
+  console.log("srtsrtsrtsrtsrt  ", garmentDetails);
+  if (garmentDetails === undefined) {
+    //setFlag(true);
+    alert("???");
+    Axios.post("http://localhost:3001/getallproducts/item", {
+      id: item,
+    }).then((response) => {
+      console.log("from server", response.data);
+      setGarmentDetails({ ...response.data });
+    });
+  }
+
   return (
     <Container>
       <NavBar />
       <Wrapper>
         <ImgContainer>
-          <Image src={imageurl}></Image>
+          <Image src={garmentDetails?.imgUrl}></Image>
         </ImgContainer>
         <InfoContainer>
-          <Title>Jenes</Title>
-          <Desc>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae
-            consequuntur natus voluptatum distinctio culpa, beatae non. Quo,
-            aspernatur ipsam obcaecati mollitia corporis molestiae dolore
-            dolores saepe. Architecto aliquid odit autem!
-          </Desc>
-          <Price>{price} ETB</Price>
+          <Title>{garmentDetails?.garmentName}</Title>
+          <Desc>{garmentDetails?.description}</Desc>
+          <Price>{garmentDetails?.price} ETB</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>

@@ -16,6 +16,9 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  //view garment details holder
+  const [garmentDetails, setGarmentDetails] = useState();
+
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   function signup(email, password) {
@@ -40,6 +43,7 @@ export function AuthProvider({ children }) {
   function updatePasswordLocal(password) {
     return updatePassword(auth.currentUser, password);
   }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user); //what is user? object or....???
@@ -57,6 +61,8 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmailLocal,
     updatePasswordLocal,
+    garmentDetails,
+    setGarmentDetails,
   };
 
   return (
