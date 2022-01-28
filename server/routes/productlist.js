@@ -4,22 +4,24 @@ const AllProductsModel = require("../models/allproducts");
 //   console.log("requested");
 // });
 
-router.get("", (req, res) => {
-  AllProductsModel.find({}, (err, result) => {
-    if (err) {
-      console.log("error occured");
-    } else {
-      console.log(result);
-      res.send(result);
-    }
-  });
+router.get("", async (req, res) => {
+  try {
+    const products = await AllProductsModel.find({}).sort({
+      price: 1,
+      garmentName: "desc",
+    });
+    res.send(products);
+  } catch (e) {
+    res.send(e.message);
+  }
 });
 
-router.post("/item", async (req, res) => {
+router.get("/item", async (req, res) => {
+  //for returning a single item using ID
   try {
-    // console.log("inside.........");
-    const item = await AllProductsModel.findById(req.body.id);
-    //console.log(item);
+    console.log("inside.........", req.query.id);
+    const item = await AllProductsModel.findById(req.query.id);
+    console.log("vvvvbbbbb", item);
     res.send(item);
   } catch (e) {
     console.log(e.message);

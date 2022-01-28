@@ -1,26 +1,31 @@
 const mongoose = require("mongoose");
 
-const AllGarment = new mongoose.Schema({
-  gender: {
-    type: String,
-    required: true,
-  },
-  garmentName: {
-    type: String,
-    required: true,
-    unique: true,
-    //trim: true,
-  },
-  imgUrl: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: { type: Number, required: true },
-});
+const AllGarment = new mongoose.Schema(
+  {
+    gender: {
+      type: String,
+      required: true,
+    },
+    garmentName: {
+      type: String,
+      required: true,
 
-const AllGarmentModel = mongoose.model("ProductsTest", AllGarment);
+      //trim: true,
+    },
+    //size: { type: Array },
+    categories: { type: String },
+    imgUrl: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    price: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
+
+const AllGarmentModel = mongoose.model("productstest12", AllGarment);
 module.exports = AllGarmentModel;

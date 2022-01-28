@@ -12,6 +12,7 @@ import UpdateProfile from "./UpdateProfile";
 import ProductList from "../Pages/ProductList";
 import Products from "./Products";
 import Product from "../Pages/Product";
+import Cart from "../Pages/Cart";
 function App() {
   return (
     <AuthProvider>
@@ -36,12 +37,15 @@ function App() {
                 <Route path="/products" component={Products} />
                 <Route path="/productlist/:category" component={ProductList} />
                 <Route path="/product" component={Product} />
-
+                <Route path="/cart" exact component={Cart} />
                 <Route
                   path="/forgot-password"
                   exact
                   component={ForgotPassword}
                 />
+                <Route path="*">
+                  <div>404 error</div>
+                </Route>
               </Switch>
             </AuthProvider>
           </Router>

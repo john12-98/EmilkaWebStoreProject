@@ -103,24 +103,39 @@ const Button = styled.button`
 `;
 
 const Product = () => {
-  const [flag, setFlag] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  //const [quantity, setQuantity] = useState(1);
   const { search } = useLocation();
   const productParam = new URLSearchParams(search);
   // const imageurl = productParam.get("imageurl");
   const item = productParam.get("itemId");
-  const { garmentDetails, setGarmentDetails } = useAuth();
+  const { garmentDetails, setGarmentDetails, currentUser } = useAuth();
   console.log("srtsrtsrtsrtsrt  ", garmentDetails);
   if (garmentDetails === undefined) {
-    //setFlag(true);
-    alert("???");
-    Axios.post("http://localhost:3001/getallproducts/item", {
-      id: item,
-    }).then((response) => {
-      console.log("from server", response.data);
-      setGarmentDetails({ ...response.data });
-    });
+    //alert("???");
+    Axios.get(`http://localhost:3001/getallproducts/item?id=${item}`).then(
+      (response) => {
+        console.log("from server", response.data);
+        setGarmentDetails({ ...response.data });
+      }
+    );
   }
-
+  function addToCart() {
+    if (currentUser === null) {
+      //alert
+      console.log("current user is null");
+    } else {
+      Axios.post(`http://localhost:3001/cart/addtocart`, {
+        Owner: currentUser.email,
+        ID: garmentDetails._id,
+        Quantity: quantity,
+        Size: size,
+      }).then((response) => {
+        console.log("juju", response);
+      });
+    }
+  }
   return (
     <Container>
       <NavBar />
@@ -152,11 +167,19 @@ const Product = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove
+                onClick={() => {
+                  setQuantity(quantity - 1);
+                }}
+              />
+              <Amount>{quantity}</Amount>
+              <Add
+                onClick={() => {
+                  setQuantity(quantity + 1);
+                }}
+              />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={addToCart}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

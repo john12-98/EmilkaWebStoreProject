@@ -9,6 +9,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import Axios from "axios";
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -18,6 +19,8 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   //view garment details holder
   const [garmentDetails, setGarmentDetails] = useState();
+
+  const [productsList, setProductsList] = useState();
 
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -50,6 +53,12 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
+    Axios.get("http://localhost:3001/getallproducts").then((response) => {
+      setProductsList([...response.data]);
+      console.log("inside auth:", response.data);
+      console.log(productsList);
+    });
+
     return unsubscribe; //this is a method returned from onAuthStateChanged that is used to unsubscribe from the listener/event
   }, []);
 
@@ -63,6 +72,8 @@ export function AuthProvider({ children }) {
     updatePasswordLocal,
     garmentDetails,
     setGarmentDetails,
+    productsList,
+    setProductsList,
   };
 
   return (

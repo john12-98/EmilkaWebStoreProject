@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const GetProducts = require("./routes/productlist");
+const FilterProducts = require("./routes/filterproducts");
+const CartRoutes = require("./routes/cartroutes");
 const app = express();
 const cors = require("cors");
 
@@ -18,6 +20,8 @@ mongoose
     console.log("DB connection failed");
   });
 app.use("/getallproducts", GetProducts);
+app.use("/filter", FilterProducts);
+app.use("/cart", CartRoutes);
 app.listen(3001, () => {
   console.log("server is listening on port 3001");
 });

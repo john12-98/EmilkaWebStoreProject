@@ -87,9 +87,11 @@ const Product = ({ item }) => {
         </Info>
         <label>price: {item.price}</label>
       </Container>
+      <label>{`garment name: ${item.garmentName}`}</label>
       <button
         onClick={() => {
-          setGarmentDetails(item);
+          setGarmentDetails({ ...item });
+          console.log("balebale", garmentDetails);
           h.push(`/product?itemId=${item._id}`);
         }}
       >
