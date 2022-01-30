@@ -19,6 +19,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   //view garment details holder
   const [garmentDetails, setGarmentDetails] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
   const [cartBadge, setCartBadge] = useState(0);
   const [productsList, setProductsList] = useState();
   const [order, setOrderItem] = useState([0]);

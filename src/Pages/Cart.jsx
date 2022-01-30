@@ -161,7 +161,7 @@ const Cart = () => {
     setOrderItem,
     order,
   } = useAuth();
-  const [cartItems, setCartItems] = useState();
+  const [cartItems, setCartItems, setTotalPrice] = useState();
   useEffect(() => {
     //get products from the cart
     Axios.post("http://localhost:3001/cart/viewcart", {
@@ -197,7 +197,7 @@ const Cart = () => {
                 <Product>
                   {productsList?.map((pi) => {
                     if (pi._id.toString() === i.productId.toString()) {
-                      totalPrice = totalPrice + pi.price;
+                      totalPrice = totalPrice + pi.price * i.quantity;
                       orderItem = {
                         customer: currentUser.email,
                         productID: i.productId,
@@ -214,8 +214,7 @@ const Cart = () => {
 
                             <Details>
                               <ProductName>
-                                <b>Product: </b>
-                                {pi.garmentName}
+                                <b>Product: {pi.garmentName}</b>
                               </ProductName>
                               {/* <ProductId>
                               <b>ID: </b>345345345
@@ -228,11 +227,16 @@ const Cart = () => {
                           </ProductDetail>
                           <PriceDetail>
                             <ProductAmountContainer>
-                              <Add />
+                              <ProductAmount>
+                                Quantity: {i.quantity}
+                              </ProductAmount>
+                              {/* <Add />
                               <ProductAmount>{i.quantity}</ProductAmount>
-                              <Remove />
+                              <Remove /> */}
                             </ProductAmountContainer>
-                            <ProductPrice>{pi.price} ETB</ProductPrice>
+                            <ProductPrice>
+                              {pi.price * i.quantity} ETB
+                            </ProductPrice>
                           </PriceDetail>
                         </div>
                       );
@@ -269,6 +273,7 @@ const Cart = () => {
             <Button
               onClick={() => {
                 setOrderItem([...orders]);
+                setTotalPrice(totalPrice);
               }}
             >
               CHECKOUT NOW

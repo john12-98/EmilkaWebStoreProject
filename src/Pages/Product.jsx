@@ -110,7 +110,13 @@ const Product = () => {
   const productParam = new URLSearchParams(search);
   // const imageurl = productParam.get("imageurl");
   const item = productParam.get("itemId");
-  const { garmentDetails, setGarmentDetails, currentUser } = useAuth();
+  const {
+    garmentDetails,
+    setGarmentDetails,
+    currentUser,
+    setCartBadge,
+    cartBadge,
+  } = useAuth();
   console.log("srtsrtsrtsrtsrt  ", garmentDetails);
   if (garmentDetails === undefined) {
     //alert("???");
@@ -133,6 +139,9 @@ const Product = () => {
         Size: size,
       }).then((response) => {
         console.log("juju", response);
+        if (response.statusText === "OK") {
+          setCartBadge(cartBadge + 1);
+        }
       });
     }
   }
