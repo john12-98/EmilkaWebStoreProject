@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Search from "@material-ui/icons/Search";
@@ -6,7 +6,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { useAuth } from "../contexts/AuthContext";
 import { mobile } from "../responsive.js";
 import { Badge } from "@material-ui/core";
-
+import Axios from "axios";
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -70,7 +70,7 @@ const MenuItem = styled.div`
 `;
 const NavBar = () => {
   const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, cartBadge, setCartBadge } = useAuth();
   const history = useHistory();
   async function handleLogout() {
     setError("");
@@ -92,7 +92,15 @@ const NavBar = () => {
       return true;
     }
   }
-
+  useEffect(() => {
+    //get products from the cart
+    Axios.post("http://localhost:3001/cart/viewcart", {
+      Owner: currentUser?.email,
+    }).then((response) => {
+      // console.log("carrrtttt:  ", response.data.length);
+      setCartBadge(response.data.length);
+    });
+  }, []);
   return (
     <Container>
       <Wrapper>
@@ -137,8 +145,12 @@ const NavBar = () => {
             <span>{1}</span>
           )}
           <MenuItem>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlinedIcon />
+            <Badge badgeContent={cartBadge} color="primary">
+              <ShoppingCartOutlinedIcon
+                onClick={() => {
+                  history.push("/cart");
+                }}
+              />
             </Badge>
           </MenuItem>
         </Right>

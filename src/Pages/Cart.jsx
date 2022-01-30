@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-
+import Axios from "axios";
 import styled from "styled-components";
 import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../responsive";
+import { useAuth } from "../contexts/AuthContext";
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 20px;
@@ -148,11 +149,39 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  let totalPrice = 0;
+  let orders = [];
+  let orderItem = {};
+  const {
+    currentUser,
+    cartBadge,
+    setCartBadge,
+    productsList,
+    setProductsList,
+    setOrderItem,
+    order,
+  } = useAuth();
+  const [cartItems, setCartItems] = useState();
+  useEffect(() => {
+    //get products from the cart
+    Axios.post("http://localhost:3001/cart/viewcart", {
+      Owner: currentUser?.email,
+    }).then((response) => {
+      console.log("carrrtttt:  ", response.data.length);
+      setCartBadge(response.data.length);
+      setCartItems([...response.data]);
+    });
+
+    //get all products will be reqested here too
+    Axios.get("http://localhost:3001/getallproducts").then((response) => {
+      setProductsList([...response.data]);
+    });
+  }, []);
   return (
     <Container>
       <NavBar />
       <Wrapper>
-        <Title>Your Bag</Title>
+        <Title>Your Bag{console.log(order)}</Title>
         <Top>
           <TopButton>CONTINUE SHOPING</TopButton>
           <TopTexts>
@@ -163,43 +192,67 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-                <Details>
-                  <ProductName>
-                    <b>Product: </b>SHOES
-                  </ProductName>
-                  <ProductId>
-                    <b>ID: </b>345345345
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size: </b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cartItems?.map((i) => {
+              return (
+                <Product>
+                  {productsList?.map((pi) => {
+                    if (pi._id.toString() === i.productId.toString()) {
+                      totalPrice = totalPrice + pi.price;
+                      orderItem = {
+                        customer: currentUser.email,
+                        productID: i.productId,
+                        address: {},
+                        quantity: i.quantity,
+                        size: i.size,
+                      };
+                      orders.push(orderItem);
+
+                      return (
+                        <div>
+                          <ProductDetail>
+                            <Image src={pi.imgUrl} />
+
+                            <Details>
+                              <ProductName>
+                                <b>Product: </b>
+                                {pi.garmentName}
+                              </ProductName>
+                              {/* <ProductId>
+                              <b>ID: </b>345345345
+                            </ProductId> */}
+
+                              <ProductSize>
+                                <b>Size: </b> {i.size}
+                              </ProductSize>
+                            </Details>
+                          </ProductDetail>
+                          <PriceDetail>
+                            <ProductAmountContainer>
+                              <Add />
+                              <ProductAmount>{i.quantity}</ProductAmount>
+                              <Remove />
+                            </ProductAmountContainer>
+                            <ProductPrice>{pi.price} ETB</ProductPrice>
+                          </PriceDetail>
+                        </div>
+                      );
+                    }
+                  })}
+                </Product>
+              );
+            })}
             <Hr />
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>{totalPrice} ETB</SummaryItemPrice>
             </SummaryItem>
 
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>80</SummaryItemPrice>
+              <SummaryItemPrice>{totalPrice} ETB</SummaryItemPrice>
             </SummaryItem>
             {/* <StripeCheckout
               name="Lama Shop"
@@ -213,7 +266,13 @@ const Cart = () => {
             >
               <Button>CHECKOUT NOW</Button>
             </StripeCheckout> */}
-            <Button>CHECKOUT NOW</Button>
+            <Button
+              onClick={() => {
+                setOrderItem([...orders]);
+              }}
+            >
+              CHECKOUT NOW
+            </Button>
           </Summary>
         </Bottom>
       </Wrapper>

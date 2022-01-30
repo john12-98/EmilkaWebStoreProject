@@ -148,20 +148,25 @@ const Product = () => {
           <Desc>{garmentDetails?.description}</Desc>
           <Price>{garmentDetails?.price} ETB</Price>
           <FilterContainer>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Color</FilterTitle>
               <FilterColor color="black" />
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
-            </Filter>
+            </Filter> */}
             <Filter>
               <FilterTitle>size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
+              <FilterSize
+                onChange={(e) => {
+                  setSize(e.target.value);
+                }}
+              >
+                <FilterSizeOption selected disabled>
+                  select
+                </FilterSizeOption>
+                {garmentDetails?.size.map((s) => {
+                  return <FilterSizeOption>{s}</FilterSizeOption>;
+                })}
               </FilterSize>
             </Filter>
           </FilterContainer>

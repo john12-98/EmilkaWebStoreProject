@@ -19,9 +19,9 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   //view garment details holder
   const [garmentDetails, setGarmentDetails] = useState();
-
+  const [cartBadge, setCartBadge] = useState(0);
   const [productsList, setProductsList] = useState();
-
+  const [order, setOrderItem] = useState([0]);
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   function signup(email, password) {
@@ -50,6 +50,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user); //what is user? object or....???
+
       setLoading(false);
     });
 
@@ -74,6 +75,10 @@ export function AuthProvider({ children }) {
     setGarmentDetails,
     productsList,
     setProductsList,
+    setCartBadge,
+    cartBadge,
+    setOrderItem,
+    order,
   };
 
   return (

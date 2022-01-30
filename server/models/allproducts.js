@@ -12,7 +12,7 @@ const AllGarment = new mongoose.Schema(
 
       //trim: true,
     },
-    //size: { type: Array },
+    size: { type: Array },
     categories: { type: String },
     imgUrl: {
       type: String,
@@ -27,5 +27,5 @@ const AllGarment = new mongoose.Schema(
   { timestamps: true }
 );
 
-const AllGarmentModel = mongoose.model("productstest12", AllGarment);
+const AllGarmentModel = mongoose.model("productstest13", AllGarment);
 module.exports = AllGarmentModel;

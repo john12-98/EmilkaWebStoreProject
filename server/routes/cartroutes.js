@@ -31,5 +31,33 @@ router.post("/addtocart", async (req, res) => {
   // console.log("addtocart");
   // res.send("added to cart");
 });
+router.post("/viewcart", async (req, res) => {
+  try {
+    const carttList = await CartModel.find(
+      { cartOwner: req.body.Owner },
+      { productsList: 1 }
+    );
 
+    let productsInCart = [];
+
+    // console.log(carttList);
+    carttList.forEach((val) => {
+      val.productsList.forEach((item) => {
+        productsInCart.push(item);
+        console.log(
+          "id is:   ",
+          item.productId,
+          "    quantity is  :",
+          item.quantity,
+          "   size is  :",
+          item.size
+        );
+      });
+    });
+    console.log(productsInCart);
+    res.send(productsInCart);
+  } catch (e) {
+    console.log(e);
+  }
+});
 module.exports = router;
