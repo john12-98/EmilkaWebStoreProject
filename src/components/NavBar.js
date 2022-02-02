@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { mobile } from "../responsive.js";
 import { Badge } from "@material-ui/core";
 import Axios from "axios";
+import ProfileMenu from "./profilemenu";
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -105,7 +106,7 @@ const NavBar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
+          <Language>EN {currentUser?.displayName}</Language>
           {/* <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
@@ -144,6 +145,15 @@ const NavBar = () => {
           ) : (
             <span>{1}</span>
           )}
+          {checkCurrentUser() ? (
+            <MenuItem>
+              {" "}
+              <ProfileMenu />
+            </MenuItem>
+          ) : (
+            <span>profile is logged out</span>
+          )}
+
           <MenuItem>
             <Badge badgeContent={cartBadge} color="primary">
               <ShoppingCartOutlinedIcon

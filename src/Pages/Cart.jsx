@@ -272,8 +272,8 @@ const Cart = () => {
             </StripeCheckout> */}
             <Button
               onClick={() => {
-                setOrderItem([...orders]);
-                setTotalPrice(totalPrice);
+                //  setOrderItem([...orders]);
+                //  setTotalPrice(totalPrice);
               }}
             >
               CHECKOUT NOW

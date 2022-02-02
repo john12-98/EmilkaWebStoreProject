@@ -2,14 +2,36 @@ import React, { useRef, useState } from "react";
 import { Card, Button, Form, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { currentUser, updateEmailLocal, updatePasswordLocal } = useAuth();
+  const {
+    currentUser,
+    updateEmailLocal,
+    updatePasswordLocal,
+    updateProfileLocal,
+  } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState();
+
+  async function handleUpdateInfo() {
+    if (name === "" || number === "") {
+    } else {
+      try {
+        await updateProfileLocal(name);
+      } catch (e) {
+        console.log("simmuunnnnmmnnnu", e);
+      }
+    }
+  }
   function handleSubmit(e) {
     e.preventDefault(); //disables clearing/refreshing the form
 
@@ -86,6 +108,51 @@ function UpdateProfile() {
       <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
       </div>
+
+      <Divider sx={{ marginTop: "100px" }} />
+
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          "& > :not(style)": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          type="text"
+          id="outlined-basic"
+          label="Name"
+          variant="outlined"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+
+        <TextField
+          type="tel"
+          id="standard-basic"
+          label="Number"
+          variant="standard"
+          onChange={(e) => {
+            setNumber(e.target.value);
+          }}
+        />
+        <TextField
+          type="file"
+          id="standard-basic"
+          label="Select Image"
+          variant="standard"
+        />
+        <button
+          onClick={() => {
+            handleUpdateInfo();
+          }}
+        >
+          Update Info
+        </button>
+      </Stack>
     </>
   );
 }

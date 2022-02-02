@@ -7,6 +7,7 @@ import {
   updateEmail,
   updatePassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import Axios from "axios";
@@ -33,6 +34,9 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
+  function updateProfileLocal(name) {
+    return updateProfile(auth.currentUser, { displayName: name });
+  }
   function logout() {
     return signOut(auth);
   }
@@ -72,6 +76,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmailLocal,
     updatePasswordLocal,
+    updateProfileLocal,
     garmentDetails,
     setGarmentDetails,
     productsList,
