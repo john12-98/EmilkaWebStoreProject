@@ -37,6 +37,13 @@ export function AuthProvider({ children }) {
   function updateProfileLocal(name) {
     return updateProfile(auth.currentUser, { displayName: name });
   }
+  function updateProfilePic(pic) {
+    return updateProfile(auth.currentUser, {
+      photoURL: pic,
+    })
+      .then(() => {})
+      .catch((error) => {});
+  }
   function logout() {
     return signOut(auth);
   }
@@ -55,7 +62,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user); //what is user? object or....???
-
+      console.log("wawawa", user);
       setLoading(false);
     });
 
@@ -85,6 +92,7 @@ export function AuthProvider({ children }) {
     cartBadge,
     setOrderItem,
     order,
+    updateProfilePic,
   };
 
   return (

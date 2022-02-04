@@ -41,10 +41,7 @@ const ProfileMenu = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Avatar
-          alt="Travis Howard"
-          src="https://dl.acm.org/do/10.1145/contrib-84458953057/full/signal-2017-05-22-204517-improved-square-zoom.jpg"
-        />
+        <Avatar alt="Travis Howard" src={currentUser?.photoURL} />
       </Button>
       <Menu
         id="basic-menu"

@@ -6,7 +6,15 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import app from "../firebase";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 function UpdateProfile() {
+  const [image, setImage] = useState(null);
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -15,13 +23,45 @@ function UpdateProfile() {
     updateEmailLocal,
     updatePasswordLocal,
     updateProfileLocal,
+    updateProfilePic,
   } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const [name, setName] = useState("");
   const [number, setNumber] = useState();
+  const handleUpload = () => {
+    console.log("inside upload");
 
+    //v9
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `wagone/${image.name}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {},
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log("File available at", downloadURL);
+          try {
+            let p = await updateProfilePic(downloadURL);
+            console.log("sertual abate", p);
+          } catch (e) {
+            console.log("ere aza new", e);
+          }
+        });
+      }
+    );
+  };
+  const handleImageChange = (e) => {
+    console.log("inside change");
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
   async function handleUpdateInfo() {
     if (name === "" || number === "") {
     } else {
@@ -144,7 +184,9 @@ function UpdateProfile() {
           id="standard-basic"
           label="Select Image"
           variant="standard"
+          onChange={handleImageChange}
         />
+        <button onClick={handleUpload}>Upload Photo</button>
         <button
           onClick={() => {
             handleUpdateInfo();
