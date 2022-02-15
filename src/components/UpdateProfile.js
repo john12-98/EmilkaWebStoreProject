@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import app from "../firebase";
 import {
@@ -160,6 +161,11 @@ function UpdateProfile() {
         noValidate
         autoComplete="off"
       >
+        <Avatar
+          alt="Remy Sharp"
+          src={currentUser?.photoURL}
+          sx={{ width: 400, height: 200 }}
+        />
         <TextField
           type="text"
           id="outlined-basic"
@@ -170,7 +176,7 @@ function UpdateProfile() {
           }}
         />
 
-        <TextField
+        {/* <TextField
           type="tel"
           id="standard-basic"
           label="Number"
@@ -178,7 +184,8 @@ function UpdateProfile() {
           onChange={(e) => {
             setNumber(e.target.value);
           }}
-        />
+        /> */}
+
         <TextField
           type="file"
           id="standard-basic"

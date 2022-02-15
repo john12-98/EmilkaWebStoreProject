@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const GetProducts = require("./routes/productlist");
 const FilterProducts = require("./routes/filterproducts");
+const OrderProducts = require("./routes/orderroutes");
 const CartRoutes = require("./routes/cartroutes");
 const app = express();
 const cors = require("cors");
@@ -22,6 +23,7 @@ mongoose
 app.use("/getallproducts", GetProducts);
 app.use("/filter", FilterProducts);
 app.use("/cart", CartRoutes);
+app.use("/order", OrderProducts);
 app.listen(3001, () => {
   console.log("server is listening on port 3001");
 });

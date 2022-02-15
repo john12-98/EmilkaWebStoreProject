@@ -60,4 +60,13 @@ router.post("/viewcart", async (req, res) => {
     console.log(e);
   }
 });
+
+router.delete("/delete", async (req, res) => {
+  try {
+    const del = await CartModel.deleteOne({ cartOwner: req.query.email });
+    console.log(del);
+  } catch (e) {
+    console.log(e);
+  }
+});
 module.exports = router;

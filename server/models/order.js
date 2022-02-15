@@ -9,7 +9,10 @@ const OrderSchema = new mongoose.Schema(
 
     productId: { type: String },
 
-    address: { type: Object }, //required : true
+    address: {
+      type: Object,
+      default: { location: "", phoneNumber: 0911000000 },
+    }, //required : true
     quantity: { type: Number, default: 1 },
     size: { type: String },
     status: { type: String, default: "pending" },
@@ -17,5 +20,5 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const OrderModel = mongoose.model("ordertest13", OrderSchema);
+const OrderModel = mongoose.model("ordertest14", OrderSchema);
 module.exports = OrderModel;
