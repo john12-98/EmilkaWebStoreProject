@@ -76,6 +76,24 @@ const Product = ({ item }) => {
         <Image src={item.imgUrl} />
         <Info>
           <Icon>
+            <label>price: {item.price}</label>
+          </Icon>
+          <Icon>
+            {" "}
+            <label>{`garment name: ${item.garmentName}`}</label>
+          </Icon>
+          <Icon>
+            <button
+              onClick={() => {
+                setGarmentDetails({ ...item });
+                console.log("balebale", garmentDetails);
+                h.push(`/product?itemId=${item._id}`);
+              }}
+            >
+              view garment
+            </button>
+          </Icon>
+          {/* <Icon>
             <ShoppingCartOutlinedIcon />
           </Icon>
           <Icon>
@@ -83,9 +101,11 @@ const Product = ({ item }) => {
           </Icon>
           <Icon>
             <FavoriteBorderOutlined />
-          </Icon>
+          </Icon> */}
         </Info>
-        <label>price: {item.price}</label>
+        <Icon>
+          <label>price: {item.price}</label>
+        </Icon>
       </Container>
       <label>{`garment name: ${item.garmentName}`}</label>
       <button

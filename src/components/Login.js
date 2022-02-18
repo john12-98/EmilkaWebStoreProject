@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 //import { Card, Button, Form, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
+import Alert from "@mui/material/Alert";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -69,11 +69,11 @@ function Login() {
 
     try {
       setError("");
-      setLoading(true); //prevents the user from multiple clicks of the sign up button and create multiple accounts
+      setLoading(true); //prevents the user from multiple clicks of the sign up button
       await login(emailRef.current.value, passwordRef.current.value);
       history.push("/"); //goes to dashboard/Home
-    } catch {
-      setError("failed to sign in");
+    } catch (e) {
+      setError(e.message);
     }
     setLoading(false);
   }
@@ -83,9 +83,10 @@ function Login() {
       <Wrapper>
         <Title>Log In</Title>
         {
-          //currentUser.email //for testting purpuses
+          //currentUser.email //for testting purposes
         }
-        {error && <p>{error}</p>}
+        {error && <Alert severity="error"> {error && <p>{error}</p>}</Alert>}
+
         <Form onSubmit={handleSubmit}>
           <Input type="email" ref={emailRef} required placeholder="E-mail" />
 

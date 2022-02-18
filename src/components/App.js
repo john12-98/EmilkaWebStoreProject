@@ -33,11 +33,15 @@ function App() {
                 />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/login" exact component={Login} />
-                <Route path="/dash" exact component={Dashboard} />
-                <Route path="/products" component={Products} />
-                <Route path="/productlist/:category" component={ProductList} />
-                <Route path="/product" component={Product} />
-                <Route path="/cart" exact component={Cart} />
+                {/* <Route path="/dash" exact component={Dashboard} /> */}
+                <Route path="/products" exact component={Products} />
+                <Route
+                  path="/productlist/:category"
+                  exact
+                  component={ProductList}
+                />
+                <PrivateRoute path="/product" exact component={Product} />
+                <PrivateRoute path="/cart" exact component={Cart} />
                 <Route
                   path="/forgot-password"
                   exact

@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-
+import Alert from "@mui/material/Alert";
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -57,7 +57,7 @@ function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup, currentUser } = useAuth();
+  const { signup, currentUser, verifyEmail } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -72,9 +72,11 @@ function Signup() {
       setError("");
       setLoading(true); //prevents the user from multiple clicks of the sign up button and create multiple accounts
       await signup(emailRef.current.value, passwordRef.current.value);
+      await verifyEmail();
       history.push("/"); //goes to dashboard
-    } catch {
-      setError("failed to create an account");
+    } catch (e) {
+      console.log("error log", e);
+      setError(e.message);
     }
     setLoading(false);
   }
@@ -86,7 +88,8 @@ function Signup() {
         {
           //currentUser.email //for testting purpuses
         }
-        {error && <p>{error}</p>}
+        {error && <Alert severity="error"> {error && <p>{error}</p>}</Alert>}
+
         <Form onSubmit={handleSubmit}>
           <Input type="email" ref={emailRef} required placeholder="E-mail" />
 

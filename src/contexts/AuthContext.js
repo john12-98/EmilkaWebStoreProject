@@ -8,6 +8,7 @@ import {
   updatePassword,
   signOut,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth } from "../firebase";
 import Axios from "axios";
@@ -29,7 +30,9 @@ export function AuthProvider({ children }) {
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password); //returns a promise
   }
-
+  function verifyEmail() {
+    return sendEmailVerification(auth.currentUser);
+  }
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
@@ -92,6 +95,7 @@ export function AuthProvider({ children }) {
     cartBadge,
     setOrderItem,
     order,
+    verifyEmail,
     updateProfilePic,
   };
 
