@@ -10,7 +10,11 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   position: relative;
-  overflow: hidden;
+
+  background: url(https://firebasestorage.googleapis.com/v0/b/users-d1c7e.appspot.com/o/wagone%2F4_5809822838487517769.jpg?alt=media&token=058c0552-dec2-4774-8e68-a406d74ecf55);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.9) inset;
 `;
 
 // ${mobile({ display: "none" })}
@@ -81,37 +85,9 @@ const Button = styled.button`
 `;
 
 const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
-  const handleClick = (direction) => {
-    if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
-    } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
-    }
-  };
-
   return (
     <Container>
-      <Arrow direction="left" onClick={() => handleClick("left")}>
-        <ArrowLeftOutlinedIcon />
-      </Arrow>
-      <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
-            </InfoContainer>
-          </Slide>
-        ))}
-      </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick("right")}>
-        <ArrowRightOutlinedIcon />
-      </Arrow>
+      {/* <img src="https://firebasestorage.googleapis.com/v0/b/users-d1c7e.appspot.com/o/wagone%2F4_5809822838487517769.jpg?alt=media&token=058c0552-dec2-4774-8e68-a406d74ecf55" /> */}
     </Container>
   );
 };

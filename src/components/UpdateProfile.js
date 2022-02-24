@@ -95,8 +95,9 @@ function UpdateProfile() {
       .then(() => {
         history.push("/");
       })
-      .catch(() => {
-        setError("failed to update account");
+      .catch((e) => {
+        setError(e.message);
+        // console.log(e);
       })
       .finally(() => {
         setLoading(false);

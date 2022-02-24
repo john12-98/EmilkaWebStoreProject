@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import Search from "@material-ui/icons/Search";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
@@ -40,13 +41,26 @@ const SearchContainer = styled.div`
   align-items: center;
   margin-left: 25px;
   padding: 5px;
+  width: 500px;
 `;
 
 const Input = styled.input`
   border: none;
   ${mobile({ width: "30px" })}
 `;
-
+const availDesigns = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: "Pulp Fiction", year: 1994 },
+  {
+    title: "The Lord of the Rings: The Return of the King",
+    year: 2003,
+  },
+];
 const ProductList = (props) => {
   console.log("parrammmssss", props.match.params.category);
   const menFilter = ["Tops", "Trousers", "Shoes"];
@@ -90,8 +104,29 @@ const ProductList = (props) => {
     <Container>
       <NavBar />
       <SearchContainer>
-        <Input placeholder="Search" />
-        <Search style={{ color: "gray", fontSize: 16 }} />
+        {/* <Input placeholder="Search" /> */}
+
+        <Autocomplete
+          freeSolo
+          id="free-solo-2-demo"
+          disableClearable
+          fullWidth
+          options={availDesigns.map((option) => option.title)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search Garment"
+              InputProps={{
+                ...params.InputProps,
+                type: "search",
+              }}
+            />
+          )}
+          onInputChange={(e, v) => {
+            console.log("search comp", v);
+          }}
+        />
+        <Search style={{ color: "gray", fontSize: 30 }} />
       </SearchContainer>
       <Title>{props.match.params.category}</Title>
       <FilterContainer>
